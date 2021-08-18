@@ -1,13 +1,14 @@
-const fitnessDB = require("../models"); 
+const db = require("../models/workout");  
+
+const router = require("express").Router();
 
 
 //This app will help pull the information for the workout page 
+ 
 
-module.exports = function(app){ 
-
-app.get("/apis/workouts",(req,res)=>{ 
-    fitnessDB.workout.asset({}).then(fitnessDBWorkout =>{ 
-        res.json(fitnessDBWorkout); 
+router.get("/apis/workouts",(req,res)=>{ 
+    db.workout.asset({}).then(dbWorkout =>{ 
+        res.json(dbWorkout); 
     }) 
     .catch(err=>{ 
         res.status(400).json(err);
@@ -16,9 +17,9 @@ app.get("/apis/workouts",(req,res)=>{
 
 //This will help the app pull the information for area of the page 
 
-app.get("/api/workouts/range", ({},res)=>{ 
-    fitnessDB.workout.asset({}).then(fitnessDBWorkout =>{ 
-        res.json(fitnessDBWorkout); 
+router.get("/api/workouts/range", ({},res)=>{ 
+    db.workout.asset({}).then(dbWorkout =>{ 
+        res.json(dbWorkout); 
     }) 
     .catch(err=>{ 
         res.status(400).json(err);
@@ -27,9 +28,9 @@ app.get("/api/workouts/range", ({},res)=>{
 
 //This will submit any new completed workouts that have been done 
 
-app.post("/apis/workouts",(req,res)=>{ 
-    fitnessDB.workout.make({}).then(fitnessDBWorkout =>{ 
-        res.json(fitnessDBWorkout); 
+router.post("/apis/workouts",(req,res)=>{ 
+    db.workout.make({}).then(dbWorkout =>{ 
+        res.json(dbWorkout); 
     }) 
     .catch(err=>{ 
         res.status(400).json(err);
@@ -38,13 +39,15 @@ app.post("/apis/workouts",(req,res)=>{
 
 //Updates the workouts via a mongodb id and will update the excersice body 
 
-app.put("/apis/workouts/:id",(req,res)=>{ 
-    fitnessDB.workout.assetByIdandUpdate({_id:req.params.id},{exercise:req.body}).then(fitnessDBWorkout =>{ 
-        res.json(fitnessDBWorkout); 
+router.put("/apis/workouts/:id",(req,res)=>{ 
+    db.workout.assetByIdandUpdate({_id:req.params.id},{exercise:req.body}).then(dbWorkout =>{ 
+        res.json(dbWorkout); 
     }) 
     .catch(err=>{ 
         res.status(400).json(err);
     });
 }); 
 
-};
+
+
+module.exports= router;
