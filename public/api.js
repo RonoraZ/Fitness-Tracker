@@ -1,18 +1,16 @@
 
 
 
-const API = { 
+const API = {  
+
     async getLastWorkout() {
-      let res;
-      try {console.log("hello",res);
-        res = await fetch("/api/workout");
+      try {
+        const res = await fetch("/api/workout");
+        const json = await res.json();
+        return json[json.length - 1];
       } catch (err) {
         console.log(err) 
-        
       }
-      const json = await res.json();
-  
-      return json[json.length - 1];
     }, 
     
     async addExercise(data) {
@@ -28,16 +26,19 @@ const API = {
   
       return json;
     },
-    async createWorkout(data = {}) {
-      const res = await fetch("/api/workout", {
+    async createWorkout(data = {}){ try{ 
+      const res =  await fetch("/api/workouts", {
         method: "POST",
         body: JSON.stringify(data),
         headers: { "Content-Type": "application/json" }
-      });
-  
-      const json = await res.json();
-  
+      }); 
+      const json = await res.json(); 
       return json;
+    }catch (err) {
+      console.log(err) 
+    }
+      
+     
     },
   
     async getWorkoutsInRange() {
