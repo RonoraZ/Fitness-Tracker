@@ -1,4 +1,4 @@
-const db = require("../models/workout");  
+const Workout = require("../models/workout.js");  
 
 const router = require("express").Router();
 
@@ -7,8 +7,8 @@ const router = require("express").Router();
  
 
 router.get("/apis/workouts",(req,res)=>{ 
-    db.workout.asset({}).then(dbWorkout =>{ 
-        res.json(dbWorkout); 
+    Workout.find({}).then(workouts =>{ 
+        res.json(workouts); 
     }) 
     .catch(err=>{ 
         res.status(400).json(err);
@@ -16,10 +16,10 @@ router.get("/apis/workouts",(req,res)=>{
 }) 
 
 //This will help the app pull the information for area of the page 
-
+console.log("Hello",Workout.find);
 router.get("/api/workouts/range", ({},res)=>{ 
-    db.workout.asset({}).then(dbWorkout =>{ 
-        res.json(dbWorkout); 
+    Workout.find({}).then(workouts =>{ 
+        res.json(workouts); 
     }) 
     .catch(err=>{ 
         res.status(400).json(err);
@@ -29,8 +29,8 @@ router.get("/api/workouts/range", ({},res)=>{
 //This will submit any new completed workouts that have been done 
 
 router.post("/apis/workouts",(req,res)=>{ 
-    db.workout.make({}).then(dbWorkout =>{ 
-        res.json(dbWorkout); 
+    Workout.create({day:Date.now()}).then(workouts =>{ 
+        res.json(workouts); 
     }) 
     .catch(err=>{ 
         res.status(400).json(err);
@@ -40,8 +40,8 @@ router.post("/apis/workouts",(req,res)=>{
 //Updates the workouts via a mongodb id and will update the excersice body 
 
 router.put("/apis/workouts/:id",(req,res)=>{ 
-    db.workout.assetByIdandUpdate({_id:req.params.id},{exercise:req.body}).then(dbWorkout =>{ 
-        res.json(dbWorkout); 
+    Workout.findIdandUpdate({_id:req.params.id},{$push:{exercise:req.body}},{new:true}).then(workout =>{ 
+        res.json(workout); 
     }) 
     .catch(err=>{ 
         res.status(400).json(err);

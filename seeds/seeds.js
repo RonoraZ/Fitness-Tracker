@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 const db = require('../models');
-const { deleteMany } = require('../models/workout');
+// const { deleteMany } = require('../models/workout');
 
 mongoose.connect("mongodb://localhost/workout", {
   useNewUrlParser: true,
    useFindAndModify: false,
-  // useUnifiedTopology: true,
+   useUnifiedTopology: true,
 });
 
 let workoutSeed = [
@@ -136,4 +136,4 @@ db.Workout.deleteMany({})
     console.error(err);
     process.exit(1);
   }); 
-  console.log("it will delete",deleteMany({}));
+  //console.log("it will delete",deleteMany({}));

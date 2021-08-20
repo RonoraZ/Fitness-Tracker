@@ -4,7 +4,7 @@ const express = require("express");
 const mongoose = require("mongoose");  
 const logger = require("morgan"); 
 
-app.use(logger('dev'));
+// app.use(logger('dev'));
 
 //Setting up express
 const PORT = process.env.PORT||27017;
