@@ -10,7 +10,15 @@ const router = require("express").Router();
  
 
 router.get("/api/workout",(req,res)=>{ 
-    Workout.find({}).then(dbWorkouts =>{ 
+    Workout.aggregate([ 
+        { 
+            $addFields:{ 
+                totalDuration:{ 
+                    $sum:'exercise.duration',
+                },
+            },
+        },
+    ]).then(dbWorkouts =>{ 
         res.json(dbWorkouts); 
     }) 
     .catch(err=>{ 
@@ -21,7 +29,17 @@ router.get("/api/workout",(req,res)=>{
 //This will help the app pull the information for area of the page  
 
 router.get("/api/workout/range", ({},res)=>{ 
-    Workout.find({}).limit(5).then(dbWorkouts =>{ 
+    Workout.aggregate([ 
+        { 
+            $addFields:{ 
+                totalDuration:{ 
+                    $sum:'excercise.duration',
+                },
+            },
+        }
+    ])  .sort({_id:-1})
+        .limit(5)
+        .then(dbWorkouts =>{ 
         res.json(dbWorkouts); 
     }) 
     .catch(err=>{ 
@@ -31,7 +49,7 @@ router.get("/api/workout/range", ({},res)=>{
 
 //This will submit any new completed workouts that have been done 
 
-router.post("/api/workout",({body},res)=>{ 
+router.post("/api/workout",(body,res)=>{ 
     Workout.create(body).then(dbWorkouts =>{ 
         res.json(dbWorkouts); 
     }) 
