@@ -60,15 +60,32 @@ router.post("/api/workout",({body},res)=>{
 
 //Updates the workouts via a mongodb id and will update the excersice body 
 
-router.put("/api/workout/:id/:data",({body,params},res)=>{ 
-    Workout.findByIdAndUpdate(params.id,{$push:{exercise:JSON.parse(params.data)}},{new:true}).then(Workouts =>{ 
-        res.json(Workouts); 
-    })   
-        console.log(body)
-        .catch(err=>{ 
-        res.status(400).json(err);
-    });
-});  
+router.put("/api/workout/:id/:data", ({ body, params}, res) => {
+    console.log( body, params);
+  
+    Workout.findOneAndUpdate(
+      { _id: params.id },
+      { $push: { exercises: JSON.parse(params.data)} },
+      { new: true ,runValidators: true}
+    )
+      .then((Workout) => {
+        res.json(Workout);
+      })
+      .catch((err) => {
+        res.json(err);
+      });
+  });
+
+
+// router.put("/api/workout/:id/:data",({body,params},res)=>{ 
+//     Workout.findByIdAndUpdate(params.id,{$push:{exercise:JSON.parse(params.data)}},{new:true}).then(Workouts =>{ 
+//         res.json(Workouts); 
+//     })   
+//         console.log(body)
+//         .catch(err=>{ 
+//         res.status(400).json(err);
+//     });
+// });  
 
 // router.put("/api/workout/:id", ({ body, params}, res) => {
 //     console.log( body, params);
