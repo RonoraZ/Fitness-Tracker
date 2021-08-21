@@ -10,7 +10,7 @@ const logger = require("morgan");
 const PORT = process.env.PORT||27017;
 const app = express(); 
 //Setting up the routes 
-app.use(require("./routes/apis.js"));
+app.use(require("./routes/api.js"));
 app.use(require("./routes/view.js"));
 
 //Setting up express to pass the data 
