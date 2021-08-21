@@ -32,7 +32,7 @@ router.get("/api/workout/range", ({},res)=>{
 //This will submit any new completed workouts that have been done 
 
 router.post("/api/workout",({body},res)=>{ 
-    Workout.create({body}).then(dbWorkouts =>{ 
+    Workout.create(body).then(dbWorkouts =>{ 
         res.json(dbWorkouts); 
     }) 
     .catch(err=>{ 
@@ -43,7 +43,7 @@ router.post("/api/workout",({body},res)=>{
 //Updates the workouts via a mongodb id and will update the excersice body 
 
 router.put("/api/workout/:id",({body,params},res)=>{ 
-    Workout.findByIdAndUpdate({params.id},{$push:{exercise:body}},{new:true}).then(dbWorkout =>{ 
+    Workout.findByIdAndUpdate(params.id,{$push:{exercise:body}},{new:true}).then(dbWorkout =>{ 
         res.json(dbWorkout); 
     }) 
     .catch(err=>{ 
