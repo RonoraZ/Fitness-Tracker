@@ -18,8 +18,8 @@ router.get("/api/workout",(req,res)=>{
                 },
             },
         },
-    ]).then(dbWorkouts =>{ 
-        res.json(dbWorkouts); 
+    ]).then(Workouts =>{ 
+        res.json(Workouts); 
     }) 
     .catch(err=>{ 
         res.status(400).json(err);
@@ -39,8 +39,8 @@ router.get("/api/workout/range", ({},res)=>{
         }
     ])  .sort({_id:-1})
         .limit(5)
-        .then(dbWorkouts =>{ 
-        res.json(dbWorkouts); 
+        .then(Workouts =>{ 
+        res.json(Workouts); 
     }) 
     .catch(err=>{ 
         res.status(400).json(err);
@@ -49,9 +49,9 @@ router.get("/api/workout/range", ({},res)=>{
 
 //This will submit any new completed workouts that have been done 
 
-router.post("/api/workout",(body,res)=>{ 
-    Workout.create(body).then(dbWorkouts =>{ 
-        res.json(dbWorkouts); 
+router.post("/api/workout",({body},res)=>{ 
+    Workout.create(body).then(Workouts =>{ 
+        res.json(Workouts); 
     }) 
     .catch(err=>{ 
         res.status(400).json(err);
@@ -60,14 +60,31 @@ router.post("/api/workout",(body,res)=>{
 
 //Updates the workouts via a mongodb id and will update the excersice body 
 
-router.put("/api/workout/:id",({body,params},res)=>{ 
-    Workout.findByIdAndUpdate(params.id,{$push:{exercise:body}},{new:true}).then(dbWorkout =>{ 
-        res.json(dbWorkout); 
-    }) 
-    .catch(err=>{ 
+router.put("/api/workout/:id/:data",({body,params},res)=>{ 
+    Workout.findByIdAndUpdate(params.id,{$push:{exercise:JSON.parse(params.data)}},{new:true}).then(Workouts =>{ 
+        res.json(Workouts); 
+    })   
+        console.log(body)
+        .catch(err=>{ 
         res.status(400).json(err);
     });
-}); 
+});  
+
+// router.put("/api/workout/:id", ({ body, params}, res) => {
+//     console.log( body, params);
+  
+//     Workout.findOneAndUpdate(
+//       { _id: params.id },
+//       { $push: { exercises: body } },
+//       { new: true ,runValidators: true}
+//     )
+//       .then((Workout) => {
+//         res.json(Workout);
+//       })
+//       .catch((err) => {
+//         res.json(err);
+//       });
+//   });
 
 
 
