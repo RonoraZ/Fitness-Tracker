@@ -16,6 +16,12 @@
 
 # **Description** 
   
+  A workout tracker that allows you to implement your workouts and keep track of them . 
+   ![](images/Screenshot%20(82).png)
+  **Heroku Link :  https://fitness-tracker-007.herokuapp.com  
+  **Localhost link : http://localhost:27017/
+  
+   
   
 
 # **Installation** 
@@ -23,8 +29,8 @@
 
 
 # **Usage** 
-        
- 
+       
+  In order to use the application go to the terminal and do an npm start once it loads into the local host implement your workouts.
 
 # **Contribution** 
 
@@ -43,4 +49,6 @@ If any questions email me at amalec.c.guzman@gmail.com
  CSS 
  JAVASCRIPT 
  NODE.JS 
- EXPRESS 
+ EXPRESS  
+ MongoDB 
+ 
